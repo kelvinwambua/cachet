@@ -62,6 +62,14 @@ func (s *Server) processCommand(line string) string {
         return s.handleClear(args)
     case "PING":
         return "PONG"
+    case "INCR":
+        return s.handleIncr(args)
+    case "DECR":
+        return s.handleDecr(args)
+    case "APPEND":
+        return s.handleAppend(args)
+    case "STRLEN":
+        return s.handleStrlen(args)
     case "EXIT", "QUIT":
         return "Goodbye!"
     default:
