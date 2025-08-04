@@ -1,33 +1,39 @@
 package server
 
 import (
-	"cachet/internal/db"
+	"cachet/internal/store"
 	"fmt"
 	"net"
 )
 
 type Server struct {
 	addr  string
-	store *db.Store
+	store store.Store
 }
 
-func New(addr string, store *db.Store) *Server {
-	return &Server{addr: addr, store: store}
+func New(addr string, store store.Store) *Server {
+	return &Server{
+		addr:  addr,
+		store: store,
+	}
 }
 
 func (s *Server) ListenAndServe() error {
-	ln, err := net.Listen("tcp", s.addr)
+	listener, err := net.Listen("tcp", s.addr)
 	if err != nil {
-		return err
+		return fmt.Errorf("failed to listen on %s: %v", s.addr, err)
 	}
-	defer ln.Close()
-	fmt.Println("Server started on", s.addr)
+	defer listener.Close()
+
+	fmt.Printf("Cachet server started on %s\n", s.addr)
 
 	for {
-		conn, err := ln.Accept()
+		conn, err := listener.Accept()
 		if err != nil {
+			fmt.Printf("Error accepting connection: %v\n", err)
 			continue
 		}
-		go handleConnection(conn, s.store)
+
+		go s.handleConnection(conn)
 	}
 }

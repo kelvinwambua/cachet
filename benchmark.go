@@ -9,7 +9,7 @@ import (
 
 func main() {
 	const addr = "localhost:6380"
-	const numRequests = 10000
+	const numRequests = 1000000000000000000
 
 	start := time.Now()
 
