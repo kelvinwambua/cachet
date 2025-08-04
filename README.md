@@ -4,7 +4,7 @@
 
 ---
 
-## 🚀 Features
+##  Features
 
 - Simple TCP server  
 - `SET` and `GET` commands (more to come)  
@@ -14,7 +14,7 @@
 
 ---
 
-## 🏁 Getting Started
+##  Getting Started
 
 ### 1. Clone the repo
 
